@@ -64,8 +64,7 @@ module.exports = (configFile, target) => {
           test: /\.css$/,
           use: [
             'style-loader',
-            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-            // 'postcss-loader'
+            target.CSSDisableHash ? 'css-loader': 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           ]
         },
         {
@@ -78,7 +77,6 @@ module.exports = (configFile, target) => {
     },
     plugins: []
   };
-
   
   if (target.useSystemRegister) {
     console.log('[react-sh] use system register')

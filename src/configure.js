@@ -24,7 +24,7 @@ module.exports = (configFile, target) => {
   const publicPath = `https://unpkg.com/${target.name}@${target.version}/dist/`
 
   const config = {
-    context: process.cwd(),
+    context: __dirname,
     devtool: false,
     entry: {
       [target.name]: [
@@ -61,10 +61,17 @@ module.exports = (configFile, target) => {
           loader: 'json-loader'
         },
         {
-          test: /\.css$/,
+          test: /\.hash\.css$/,
           use: [
             'style-loader',
-            target.CSSDisableHash ? 'css-loader': 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          ]
+        },
+        {
+          test: /^((?!hash).)*\.css$/,
+          use: [
+            'style-loader',
+            'css-loader',
           ]
         },
         {

@@ -17,15 +17,16 @@ module.exports = (config, selectedTarget) => {
       const targetVersion = target.version;
       delete target.name;
       delete target.version;
-      const compiler = !!!selectedTarget ? 
+      const compiler = !!!selectedTarget ?
         webpack(target) : 
-        targetName === selectedTarget ? 
+        targetName === selectedTarget ?
           webpack(target) : 
           {run: e => console.log(`ignore: ${targetName}`)};    
 
       const packageFilePath = `${process.cwd()}/packages/${targetName}/package.json`;
       const packageFile = JSON.parse(await fs.readFile(packageFilePath, 'utf8'))
       packageFile.version = targetVersion
+      packageFile.main = `dist/${targetName}.js`
       if (config.targetsWithHTML.find(item => targetName === item)){
         const html = renderHTML(config)
         const htmlFilePath = `${process.cwd()}/packages/${targetName}/index.html`;

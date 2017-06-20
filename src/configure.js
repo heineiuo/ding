@@ -7,6 +7,7 @@ const path = require('path')
 const mkdirp = require('mkdirp')
 const WebpackSystemRegister = require('webpack-system-register')
 const BabiliPlugin = require('babili-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 /**
  * webpack client config
@@ -86,20 +87,23 @@ module.exports = (configFile, target) => {
   };
   
   if (target.useSystemRegister) {
-    console.log('[react-sh] use system register')
+    console.log('lolla: use system register')
     config.plugins.push(
       new WebpackSystemRegister({})
     )
   }
 
   if (argv.compress) {
-    config.plugins.push(new BabiliPlugin({
-      removeConsole: true,
-      keepFnName: false,
-      keepClassName: false,
-    }, {
-      test: /\.js($|\?)/i
-    }))
+
+    // todo use uglify before bug (https://github.com/babel/babili/issues/583) fixed
+    config.plugins.push(new UglifyJSPlugin())
+    // config.plugins.push(new BabiliPlugin({
+    //   removeConsole: true,
+    //   keepFnName: true,
+    //   keepClassName: true,
+    // }, {
+    //   test: /\.js($|\?)/i
+    // }))
   }
 
   if (target.externals) {

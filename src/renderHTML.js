@@ -17,7 +17,7 @@ module.exports = (configFile) => {
 
   let preloadPackage = configFile.html.preloadPackages.map(packname => {
     const target = configFile.targets.find(item => item.name === packname)
-    if (!target) return `<!-- ${item} not found -->`
+    if (!target) return `<!-- ${packname} not found -->`
     const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
     return isTargetIgnore ? 
       `<script src='https://unpkg.com/${target.name}@${target.version}/dist/${target.name}.js'></script>`:

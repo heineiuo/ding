@@ -5,7 +5,6 @@ const path = require('path')
 const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
-const renderHTML = require('./renderHTML')
 const config = require('./config')
 const shelljs = require('shelljs')
 
@@ -13,7 +12,6 @@ const shelljs = require('shelljs')
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
 const build = require('./build')
-const dev = require('./server')
 
 process.nextTick(() => {
 

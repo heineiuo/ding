@@ -8,6 +8,7 @@ const mkdirp = require('mkdirp')
 const WebpackSystemRegister = require('webpack-system-register')
 const BabiliPlugin = require('babili-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const trimEnd = require('lodash/trimEnd')
 
 /**
  * webpack client config
@@ -20,16 +21,16 @@ module.exports = (configFile, target) => {
 
   const {argv} = configFile;
 
-  const distPath = `./packages/${target.name}/dist/`
-  const devPublicPath = `http://127.0.0.1:${configFile.port}/${target.name}/dist/`
-  const publicPath = `https://unpkg.com/${target.name}@${target.version}/dist/`
+  const distPath = `./packages/${target.name}/`
+  const devPublicPath = `http://127.0.0.1:${configFile.port}/${target.name}/`
+  const publicPath = `https://unpkg.com/${target.name}@${target.version}/`
 
   const config = {
     context: __dirname,
     devtool: false,
     entry: {
-      [target.name]: [
-        path.join(process.cwd(), target.main)
+      [trimEnd(target.main, '.js')]: [
+        path.join(process.cwd(), target.devEntry)
       ]
     },
     target: 'web',

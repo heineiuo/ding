@@ -26,7 +26,7 @@ module.exports = (config, selectedTarget) => {
       const packageFilePath = `${process.cwd()}/packages/${targetName}/package.json`;
       const packageFile = JSON.parse(await fs.readFile(packageFilePath, 'utf8'))
       packageFile.version = targetVersion
-      packageFile.main = `dist/${targetName}.js`
+      packageFile.main = target.main || 'index.js'
       if (config.targetsWithHTML.find(item => targetName === item)){
         const html = renderHTML(config)
         const htmlFilePath = `${process.cwd()}/packages/${targetName}/index.html`;

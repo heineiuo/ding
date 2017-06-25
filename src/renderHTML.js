@@ -1,3 +1,6 @@
+const {minify} = require('html-minifier')
+
+
 module.exports = (configFile) => {
 
   const {html, html: {
@@ -20,8 +23,8 @@ module.exports = (configFile) => {
     if (!target) return `<!-- ${packname} not found -->`
     const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
     return isTargetIgnore ? 
-      `<script src='https://unpkg.com/${target.name}@${target.version}/dist/${target.name}.js'></script>`:
-      `<script src='http://127.0.0.1:${configFile.port}/${target.name}/dist/${target.name}.js'></script>`
+      `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}.js'></script>`:
+      `<script src='http://127.0.0.1:${configFile.port}/${target.name}/${target.main}.js'></script>`
   }).join('')
 
   let globalConstants = Object.assign({}, configFile.html.devGlobalConstants)
@@ -31,8 +34,8 @@ module.exports = (configFile) => {
   configFile.targets.map(target => {
     const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
     __SYSTEM_CONFIG.map[target.name] = isTargetIgnore ? 
-      `https://unpkg.com/${target.name}@${target.version}/dist/${target.name}.js`:
-      `http://127.0.0.1:${configFile.port}/${target.name}/dist/${target.name}.js`
+      `https://unpkg.com/${target.name}@${target.version}/${target.main}.js`:
+      `http://127.0.0.1:${configFile.port}/${target.name}/${target.main}.js`
   })
 
   if (configFile.argv.production) {
@@ -48,13 +51,13 @@ module.exports = (configFile) => {
     preloadPackage = configFile.html.preloadPackages.map(packname => {
       const target = configFile.targets.find(item => item.name === packname)
       if (!target) return `<!-- ${item} not found -->`
-      return `<script src='https://unpkg.com/${target.name}@${target.version}/dist/${target.name}.js'></script>`
+      return `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}.js'></script>`
     }).join('')
 
     globalConstants = Object.assign({}, configFile.html.globalConstants)
     
     configFile.targets.map(target => {
-      __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/dist/${target.name}.js`
+      __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/${target.main}.js`
     })
 
   }
@@ -67,7 +70,7 @@ module.exports = (configFile) => {
 
   
 
-  return `<!DOCTYPE html>
+  const htmlOutout =  `<!DOCTYPE html>
 <html lang="zh-CN" style="${styles.html}">
 <head>
   <meta charset="utf-8">
@@ -100,4 +103,12 @@ module.exports = (configFile) => {
   
 </body>
 </html>`
+
+
+  return minify(htmlOutout, {
+    removeAttributeQuotes: true,
+    collapseWhitespace: true,
+    ignoreCustomComments: true,
+    removeComments: true
+  })
 }

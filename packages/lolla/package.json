@@ -28,6 +28,7 @@
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
     "file-loader": "^0.11.2",
+    "html-minifier": "^3.5.2",
     "json-format": "^1.0.1",
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",

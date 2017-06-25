@@ -2,6 +2,7 @@ const {minify} = require('html-minifier')
 
 
 module.exports = (configFile) => {
+  const {title} = config.html
 
   const {html, html: {
     description, 
@@ -18,26 +19,34 @@ module.exports = (configFile) => {
     return `<script src='${item}'></script>`
   }).join('')
 
+  /**
+   * 通过script标签预加载的package（同时也定义在systemjs里）
+   */
   let preloadPackage = configFile.html.preloadPackages.map(packname => {
     const target = configFile.targets.find(item => item.name === packname)
     if (!target) return `<!-- ${packname} not found -->`
     const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
     return isTargetIgnore ? 
-      `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}.js'></script>`:
-      `<script src='http://127.0.0.1:${configFile.port}/${target.name}/${target.main}.js'></script>`
+      `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}'></script>`:
+      `<script src='http://127.0.0.1:${configFile.port}/${target.name}/${target.main}'></script>`
   }).join('')
 
+  /**
+   * 全局变量
+   * 
+   */
   let globalConstants = Object.assign({}, configFile.html.devGlobalConstants)
-
   let __SYSTEM_CONFIG = Object.assign({}, SYSTEM_CONFIG_WITHOUT_THIS_REPO_PACKAGES)
-
   configFile.targets.map(target => {
     const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
     __SYSTEM_CONFIG.map[target.name] = isTargetIgnore ? 
-      `https://unpkg.com/${target.name}@${target.version}/${target.main}.js`:
-      `http://127.0.0.1:${configFile.port}/${target.name}/${target.main}.js`
+      `https://unpkg.com/${target.name}@${target.version}/${target.main}`:
+      `http://127.0.0.1:${configFile.port}/${target.name}/${target.main}`
   })
 
+  /**
+   * production
+   */
   if (configFile.argv.production) {
     
     css = configFile.html.preloadCSS.map(item => {
@@ -74,7 +83,7 @@ module.exports = (configFile) => {
 <html lang="zh-CN" style="${styles.html}">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>${title}</title>
   <meta name="description" content=${description}>
   <meta name="author" content=${author}>
   <meta name="viewport" content='initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width'>

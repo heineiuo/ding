@@ -2,7 +2,7 @@ const {minify} = require('html-minifier')
 
 
 module.exports = (configFile) => {
-  const {title} = config.html
+  const {title} = configFile.html
 
   const {html, html: {
     description, 

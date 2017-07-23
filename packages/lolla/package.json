@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"
@@ -26,6 +26,7 @@
     "babel-runtime": "^6.23.0",
     "babili-webpack-plugin": "^0.1.1",
     "css-loader": "^0.28.4",
+    "cors": "^2.8.4",
     "express": "^4.15.3",
     "file-loader": "^0.11.2",
     "html-minifier": "^3.5.2",

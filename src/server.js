@@ -5,6 +5,7 @@ const path = require('path')
 const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
+const cors = require('cors')
 const renderHTML = require('./renderHTML')
 const configFile = require('./config')
 
@@ -16,6 +17,7 @@ process.nextTick(() => {
   const webroot = path.join(process.cwd(), configFile.webroot || configFile.devPublicPath || './');
 
   const app = express();
+  app.use(cors())
 
   if (!argv.preview) {
     parsedTargets.forEach( target => {

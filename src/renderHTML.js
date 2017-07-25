@@ -60,13 +60,13 @@ module.exports = (configFile) => {
     preloadPackage = configFile.html.preloadPackages.map(packname => {
       const target = configFile.targets.find(item => item.name === packname)
       if (!target) return `<!-- ${item} not found -->`
-      return `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}.js'></script>`
+      return `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}'></script>`
     }).join('')
 
     globalConstants = Object.assign({}, configFile.html.globalConstants)
     
     configFile.targets.map(target => {
-      __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/${target.main}.js`
+      __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/${target.main}`
     })
 
   }

@@ -1,7 +1,7 @@
 const {minify} = require('html-minifier')
 
 
-module.exports = (configFile) => {
+module.exports = (configFile, lollaFile) => {
   const {title} = configFile.html
 
   const {html, html: {
@@ -23,9 +23,9 @@ module.exports = (configFile) => {
    * 通过script标签预加载的package（同时也定义在systemjs里）
    */
   let preloadPackage = configFile.html.preloadPackages.map(packname => {
-    const target = configFile.targets.find(item => item.name === packname)
+    const target = lollaFile.packages.find(item => item.name === packname)
     if (!target) return `<!-- ${packname} not found -->`
-    const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
+    const isTargetIgnore = !!lollaFile.ignorePackages.find(item => item === target.name)
     return isTargetIgnore ? 
       `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}'></script>`:
       `<script src='http://127.0.0.1:${configFile.port}/${target.name}/${target.main}'></script>`
@@ -37,8 +37,8 @@ module.exports = (configFile) => {
    */
   let globalConstants = Object.assign({}, configFile.html.devGlobalConstants)
   let __SYSTEM_CONFIG = Object.assign({}, SYSTEM_CONFIG_WITHOUT_THIS_REPO_PACKAGES)
-  configFile.targets.map(target => {
-    const isTargetIgnore = !!configFile.ignoreTargets.find(item => item === target.name)
+  lollaFile.packages.map(target => {
+    const isTargetIgnore = !!lollaFile.ignorePackages.find(item => item === target.name)
     __SYSTEM_CONFIG.map[target.name] = isTargetIgnore ? 
       `https://unpkg.com/${target.name}@${target.version}/${target.main}`:
       `http://127.0.0.1:${configFile.port}/${target.name}/${target.main}`
@@ -47,7 +47,7 @@ module.exports = (configFile) => {
   /**
    * production
    */
-  if (configFile.argv.production) {
+  if (lollaFile.argv.production) {
     
     css = configFile.html.preloadCSS.map(item => {
       return `<link rel="stylesheet" type="text/css" href="${item}">`
@@ -58,14 +58,14 @@ module.exports = (configFile) => {
     }).join('')
 
     preloadPackage = configFile.html.preloadPackages.map(packname => {
-      const target = configFile.targets.find(item => item.name === packname)
+      const target = lollaFile.packages.find(item => item.name === packname)
       if (!target) return `<!-- ${item} not found -->`
       return `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}'></script>`
     }).join('')
 
     globalConstants = Object.assign({}, configFile.html.globalConstants)
     
-    configFile.targets.map(target => {
+    lollaFile.packages.map(target => {
       __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/${target.main}`
     })
 

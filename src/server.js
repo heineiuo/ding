@@ -47,11 +47,15 @@ process.nextTick(() => {
   }
 
 
-  app.route('/').all((req, res, next) => {
-    res.write(renderHTML(configFile))
-    res.end()
+  configFile.packages.forEach(packageConfig => {
+    if (packageConfig.hasOwnProperty('html')){
+      app.route(`/${packageConfig.name}`).all((req, res, next) => {
+        res.write(renderHTML(packageConfig, configFile))
+        res.end()
+      })
+    }
   })
-
+  
   app.route('*').all((req, res, next) => {
     try {
       res.sendFile(`${webroot}/${req.path}`)
@@ -59,7 +63,6 @@ process.nextTick(() => {
       res.sendStatus(404)
     }
   });
-
 
   app.listen(configFile.port, '127.0.0.1', (err) => {
     if (err) return console.log(err);

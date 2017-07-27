@@ -27,8 +27,8 @@ module.exports = (config, selectedTarget) => {
       const packageFile = JSON.parse(await fs.readFile(packageFilePath, 'utf8'))
       packageFile.version = targetVersion
       packageFile.main = target.main || 'index.js'
-      if (config.targetsWithHTML.find(item => targetName === item)){
-        const html = renderHTML(config)
+      if (packageFile.hasOwnProperty('html')){
+        const html = renderHTML(packageFile, config)
         const htmlFilePath = `${process.cwd()}/packages/${targetName}/index.html`;
         await fs.writeFile(htmlFilePath, html, 'utf8')
       }

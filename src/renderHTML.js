@@ -28,7 +28,7 @@ module.exports = (configFile, lollaFile) => {
     const isTargetIgnore = !!lollaFile.ignorePackages.find(item => item === target.name)
     return isTargetIgnore ? 
       `<script src='https://unpkg.com/${target.name}@${target.version}/${target.main}'></script>`:
-      `<script src='http://127.0.0.1:${configFile.port}/${target.name}/${target.main}'></script>`
+      `<script src='http://127.0.0.1:${lollaFile.port}/${target.name}/${target.main}'></script>`
   }).join('')
 
   /**
@@ -41,7 +41,7 @@ module.exports = (configFile, lollaFile) => {
     const isTargetIgnore = !!lollaFile.ignorePackages.find(item => item === target.name)
     __SYSTEM_CONFIG.map[target.name] = isTargetIgnore ? 
       `https://unpkg.com/${target.name}@${target.version}/${target.main}`:
-      `http://127.0.0.1:${configFile.port}/${target.name}/${target.main}`
+      `http://127.0.0.1:${lollaFile.port}/${target.name}/${target.main}`
   })
 
   /**

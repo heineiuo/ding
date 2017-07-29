@@ -1,11 +1,11 @@
 {
   "name": "lolla",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"
   },
-  "main": "lib/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heineiuo/lolla.git"

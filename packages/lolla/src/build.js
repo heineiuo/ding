@@ -14,22 +14,23 @@ module.exports = (config, selectedTarget) => {
   parsedTargets.forEach(async target => {
     try {
       const targetName = target.name;
+      const outputDir = target.outputDir || target.output || target.name;
       const targetVersion = target.version;
       delete target.name;
       delete target.version;
-      const compiler = !!!selectedTarget ?
+      const compiler = !selectedTarget ?
         webpack(target) : 
         targetName === selectedTarget ?
           webpack(target) : 
           {run: e => console.log(`ignore: ${targetName}`)};    
 
-      const packageFilePath = `${process.cwd()}/packages/${targetName}/package.json`;
+      const packageFilePath = `${process.cwd()}/packages/${outputDir}/package.json`;
       const packageFile = JSON.parse(await fs.readFile(packageFilePath, 'utf8'))
       packageFile.version = targetVersion
       packageFile.main = target.main || 'index.js'
       if (packageFile.hasOwnProperty('html')){
         const html = renderHTML(packageFile, config)
-        const htmlFilePath = `${process.cwd()}/packages/${targetName}/index.html`;
+        const htmlFilePath = `${process.cwd()}/packages/${outputDir}/index.html`;
         await fs.writeFile(htmlFilePath, html, 'utf8')
       }
       await fs.writeFile(packageFilePath, jsonFormat(packageFile), 'utf8')

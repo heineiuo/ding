@@ -47,5 +47,8 @@
     "webpack-system-register": "^1.5.0",
     "yargs": "^8.0.1",
     "cors": "^2.8.4"
+  },
+  "dependencies": {
+    "lolla": "^0.2.3"
   }
 }

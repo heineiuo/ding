@@ -18,10 +18,8 @@ const trimEnd = require('lodash/trimEnd')
 module.exports = (configFile, target) => {
 
   console.log(`[webpack target] name: ${target.name}, main: ${target.main}`);
-
   const {argv} = configFile;
-
-  const distPath = `./packages/${target.name}/`
+  const distPath = `./packages/${target.outputDir || target.output || target.name}/`
   const devPublicPath = `http://127.0.0.1:${configFile.port}/${target.name}/`
   const publicPath = `https://unpkg.com/${target.name}@${target.version}/`
 
@@ -95,7 +93,6 @@ module.exports = (configFile, target) => {
   }
 
   if (argv.compress) {
-
     // todo use uglify before bug (https://github.com/babel/babili/issues/583) fixed
     config.plugins.push(new UglifyJSPlugin())
     // config.plugins.push(new BabiliPlugin({

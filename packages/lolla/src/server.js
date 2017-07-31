@@ -2,7 +2,6 @@ const fs = require('mz/fs')
 const express = require('express')
 const webpack = require('webpack')
 const path = require('path')
-const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
 const cors = require('cors')
@@ -13,13 +12,13 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&t
 
 process.nextTick(() => {
 
-  const {packages, argv} = configFile;
+  const {packages} = configFile;
   const webroot = path.join(process.cwd(), configFile.webroot || configFile.devPublicPath || './');
 
   const app = express();
   app.use(cors())
 
-  if (!argv.preview) {
+  if (!configFile.preview) {
     packages.forEach( pkg => {
       if (!pkg.webpack) return null
       const {target} = pkg.webpack

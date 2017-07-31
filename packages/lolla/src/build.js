@@ -4,36 +4,35 @@ const path = require('path')
 const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
-const renderHTML = require('./renderHTML')
+const renderHTML = require('./html')
+const config = require('./config')
 
+module.exports = () => {
 
-module.exports = (config, selectedTarget) => {
+  const {packages, argv} = config;
 
-  const {parsedTargets, argv} = config;
-
-  parsedTargets.forEach(async target => {
+  packages.forEach(async (pkg) => {
+    if (!pkg.webpack) return null
     try {
-      const targetName = target.name;
-      const outputDir = target.outputDir || target.output || target.name;
-      const targetVersion = target.version;
-      delete target.name;
-      delete target.version;
-      const compiler = !selectedTarget ?
-        webpack(target) : 
-        targetName === selectedTarget ?
-          webpack(target) : 
-          {run: e => console.log(`ignore: ${targetName}`)};    
+      const compiler = webpack(pkg.webpack) 
 
-      const packageFilePath = `${process.cwd()}/packages/${outputDir}/package.json`;
+      const targetName = pkg.name;
+      const outputDir = pkg.outputDir || pkg.output || pkg.name;
+      const targetVersion = pkg.version;
+
+      const packageFilePath = path.resolve(process.cwd(), `${outputDir}/package.json`);
+      const htmlFilePath = path.resolve(process.cwd(), `${outputDir}/index.html`);
+
       const packageFile = JSON.parse(await fs.readFile(packageFilePath, 'utf8'))
       packageFile.version = targetVersion
-      packageFile.main = target.main || 'index.js'
+      packageFile.main = pkg.main || 'index.js'
+
       if (packageFile.hasOwnProperty('html')){
-        const html = renderHTML(packageFile, config)
-        const htmlFilePath = `${process.cwd()}/packages/${outputDir}/index.html`;
-        await fs.writeFile(htmlFilePath, html, 'utf8')
+        await fs.writeFile(htmlFilePath, renderHTML(packageFile, config), 'utf8')
       }
+
       await fs.writeFile(packageFilePath, jsonFormat(packageFile), 'utf8')
+      
       compiler.run((err, stats) => {
         if (err) return console.error(`webpack: error, ${err.stack||e}`);
         console.log(`webpack: build ${targetName} success`);

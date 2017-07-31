@@ -6,24 +6,23 @@ const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
 const cors = require('cors')
-const renderHTML = require('./renderHTML')
+const renderHTML = require('./html')
 const configFile = require('./config')
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
 process.nextTick(() => {
 
-  const {parsedTargets, argv} = configFile;
+  const {packages, argv} = configFile;
   const webroot = path.join(process.cwd(), configFile.webroot || configFile.devPublicPath || './');
 
   const app = express();
   app.use(cors())
 
   if (!argv.preview) {
-    parsedTargets.forEach( target => {
-
-      delete target.name;
-      delete target.version;
+    packages.forEach( pkg => {
+      if (!pkg.webpack) return null
+      const {target} = pkg.webpack
       // target.entry.app.push(hotMiddlewareScript);
       target.devtool = 'inline-source-map';
       // target.plugins.push(new webpack.HotModuleReplacementPlugin());

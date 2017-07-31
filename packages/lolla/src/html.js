@@ -11,6 +11,8 @@ module.exports = (configFile, lollaFile) => {
     SYSTEM_CONFIG_WITHOUT_THIS_REPO_PACKAGES
   }} = configFile
 
+  if (!html) throw new Error('html property not found')
+
   let css = configFile.html.devPreloadCSS.map(item => {
     return `<link rel="stylesheet" type="text/css" href="${item}">`
   }).join('')

@@ -49,6 +49,6 @@
     "cors": "^2.8.4"
   },
   "dependencies": {
-    "lolla": "^0.2.3"
+    "lolla": "^0.2.4-beta.1"
   }
 }

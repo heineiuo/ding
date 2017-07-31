@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.2.3",
+  "version": "0.2.4-beta.13",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"

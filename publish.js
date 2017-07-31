@@ -4,7 +4,7 @@ const {promisify} = require('util')
 const fs = require('fs')
 
 
-const {package} = argv
+const {package, next} = argv
 
 process.nextTick(async () => {
 
@@ -12,7 +12,7 @@ process.nextTick(async () => {
     shelljs.cd(`packages/${package}`)
     shelljs.exec(`rm -f *.js`)
     shelljs.exec(`babel src -d .`)
-    shelljs.exec(`npm publish --access=public`)
+    shelljs.exec(`npm publish --access=public ${next? '--tag=next': ''}`)
     shelljs.exec(`rm -f *.js`)
   }
 })

@@ -21,7 +21,7 @@ process.nextTick(() => {
   if (!configFile.preview) {
     packages.forEach( pkg => {
       if (!pkg.webpack) return null
-      const {target} = pkg.webpack
+      const target = pkg.webpack
       // target.entry.app.push(hotMiddlewareScript);
       target.devtool = 'inline-source-map';
       // target.plugins.push(new webpack.HotModuleReplacementPlugin());

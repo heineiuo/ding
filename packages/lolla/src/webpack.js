@@ -109,6 +109,14 @@ module.exports = (configFile) => {
       // console.log(config.externals)
     }
 
+    if (pkg.alias) {
+      pkg.alias.forEach(name => {
+        const findAlias = configFile.alias.find(item => item.commonjs === name)
+        config.resolve.alias[name] = path.resolve(`${process.cwd()}/node_modules`, findAlias.path)
+        console.log(config.resolve.alias[name])
+      })
+    }
+
     if (configFile.compress) {
       // todo use uglify before bug (https://github.com/babel/babili/issues/583) fixed
       config.plugins.push(new UglifyJSPlugin())
@@ -120,13 +128,6 @@ module.exports = (configFile) => {
       //   test: /\.js($|\?)/i
       // }))
     }
-
-    if (configFile.alias) {
-      Object.keys(configFile.alias).forEach(name => {
-        config.resolve.alias[name] = path.join(`${process.cwd()}/node_modules`, configFile.alias[name])
-      })
-    }
-
     if (configFile.production) {
       // console.log(`[webpack configure] use define plugin, NODE_ENV: production`);
       config.plugins.push(new webpack.DefinePlugin({

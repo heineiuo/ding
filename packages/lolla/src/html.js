@@ -49,7 +49,7 @@ module.exports = (configFile, lollaFile) => {
   /**
    * production
    */
-  if (lollaFile.argv.production) {
+  if (lollaFile.production) {
     
     css = configFile.html.preloadCSS.map(item => {
       return `<link rel="stylesheet" type="text/css" href="${item}">`

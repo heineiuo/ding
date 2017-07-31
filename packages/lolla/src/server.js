@@ -7,6 +7,7 @@ const union = require('lodash/union')
 const cors = require('cors')
 const renderHTML = require('./html')
 const configFile = require('./config')
+const compression = require('compression')
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
@@ -17,6 +18,7 @@ process.nextTick(() => {
 
   const app = express();
   app.use(cors())
+  app.use(compression())
 
   if (!configFile.preview) {
     packages.forEach( pkg => {

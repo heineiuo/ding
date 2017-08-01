@@ -49,7 +49,7 @@ module.exports = (configFile) => {
         libraryTarget: pkg.platform === 'web' ?'umd' : 'commonjs2',
         umdNamedDefine: pkg.platform === 'web' ? true : false
       },
-      externals: {},
+      externals: pkg.platform === 'node' ? [nodeExternals()]: {},
       resolve: {
         alias: {},
         extensions: ['.jsx', '.js', '.json'],

@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.3.7-beta.1",
+  "version": "0.4.0-beta.2",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"
@@ -33,6 +33,7 @@
     "html-minifier": "^3.5.2",
     "json-format": "^1.0.1",
     "lodash": "^4.17.4",
+    "match-when": "^3.0.0",
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "shelljs": "^0.7.8",

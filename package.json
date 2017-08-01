@@ -49,5 +49,10 @@
     "cors": "^2.8.4",
     "compression": "^1.7.0",
     "lolla": "^0.2.4-beta.1"
+  },
+  "dependencies": {
+    "match-when": "^3.0.0",
+    "shelljs": "^0.7.8",
+    "yargs": "^8.0.2"
   }
 }

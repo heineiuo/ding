@@ -29,12 +29,14 @@ const displayVersion = () => console.log(
 `lolla version: ${pkginfo.version}`
 )
 
+const dev = () => {
+  let extraCommand = '';
+  if (argv.port) extraCommand += ` --port ${config.port}`
+  shelljs.exec(`node ${path.resolve(__dirname, './server.js')} ${extraCommand}`);
+}
+
 match(argv._[0], {
-  [when('dev')]: () => {
-    let extraCommand = '';
-    if (argv.port) extraCommand += ` --port ${config.port}`
-    shelljs.exec(`node ${path.resolve(__dirname, './server.js')} ${extraCommand}`);
-  },
+  [when('dev')]: dev,
   [when('build')]: build,
   [when('publish')]: () => {
     const {next} = argv
@@ -49,9 +51,5 @@ match(argv._[0], {
   },
   [when('version')]: displayVersion,
   [when('help')]: displayHelp,
-  [when()]: () => {
-    const {version} = argv
-    if (!!version) return displayVersion()
-    displayHelp()
-  }
+  [when()]: dev
 })

@@ -27,8 +27,8 @@ module.exports = () => {
       packageFile.version = targetVersion
       packageFile.main = pkg.main || 'index.js'
 
-      if (packageFile.hasOwnProperty('html')){
-        await fs.writeFile(htmlFilePath, renderHTML(packageFile, config), 'utf8')
+      if (pkg.hasOwnProperty('html')){
+        await fs.writeFile(htmlFilePath, renderHTML(pkg, config), 'utf8')
       }
 
       await fs.writeFile(packageFilePath, jsonFormat(packageFile), 'utf8')

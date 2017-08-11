@@ -39,7 +39,8 @@ module.exports = (configFile, lollaFile) => {
    */
   let globalConstants = Object.assign({}, configFile.html.devGlobalConstants)
   let __SYSTEM_CONFIG = Object.assign({}, SYSTEM_CONFIG_WITHOUT_THIS_REPO_PACKAGES)
-  lollaFile.packages.map(target => {
+  lollaFile.packages.forEach(target => {
+    if (target.platform === 'node') return null
     const isTargetIgnore = !!lollaFile.ignorePackages.find(item => item === target.name)
     __SYSTEM_CONFIG.map[target.name] = isTargetIgnore ? 
       `https://unpkg.com/${target.name}@${target.version}/${target.main}`:
@@ -67,7 +68,8 @@ module.exports = (configFile, lollaFile) => {
 
     globalConstants = Object.assign({}, configFile.html.globalConstants)
     
-    lollaFile.packages.map(target => {
+    lollaFile.packages.forEach(target => {
+      if (target.platform === 'node') return null
       __SYSTEM_CONFIG.map[target.name] = `https://unpkg.com/${target.name}@${target.version}/${target.main}`
     })
 

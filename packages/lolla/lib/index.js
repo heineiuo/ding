@@ -13,7 +13,7 @@ const config = require('./config')
 const build = require('./build')
 
 const displayHelp = () => console.log(
-`Usage:  lolla COMMAND
+  `Usage:  lolla COMMAND
 
 Options: 
   --ignore list   Ignore packages to dev or build, example: "pkg1,pkg2"
@@ -26,7 +26,7 @@ Commands:
 )
 
 const displayVersion = () => console.log(
-`lolla version: ${pkginfo.version}`
+  `lolla version: ${pkginfo.version}`
 )
 
 const dev = () => {
@@ -39,13 +39,13 @@ match(argv._[0], {
   [when('dev')]: dev,
   [when('build')]: build,
   [when('publish')]: () => {
-    const {next} = argv
+    const { next } = argv
     const targetPackage = argv._[1]
     if (!!targetPackage) {
       shelljs.cd(`packages/${targetPackage}`)
       shelljs.exec(`rm -f *.js`)
       shelljs.exec(`babel src -d .`)
-      shelljs.exec(`npm publish --access=public ${next? '--tag=next': ''}`)
+      shelljs.exec(`npm publish --access=public ${next ? '--tag=next' : ''}`)
       shelljs.exec(`rm -f *.js`)
     }
   },

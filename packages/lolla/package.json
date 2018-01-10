@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.4.0-beta.4",
+  "version": "0.4.2-beta.2",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"
@@ -37,6 +37,7 @@
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "shelljs": "^0.7.8",
+    "stats-webpack-plugin": "^0.6.1",    
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "url-loader": "^0.5.8",

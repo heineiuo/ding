@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d packages/lolla/lib",
+    "build": "babel packages/lolla/src -d packages/lolla/lib",
     "test-install": "npm run build && cd packages/lolla && npm install ./ -g --cache-min 9999999 && cd ../.."
   },
   "repository": {

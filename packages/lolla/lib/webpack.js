@@ -10,6 +10,7 @@ const BabiliPlugin = require('babili-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const trimEnd = require('lodash/trimEnd')
 const defaults = require('lodash/defaults')
+const StatsPlugin = require('stats-webpack-plugin')
 
 /**
  * webpack client config
@@ -116,6 +117,15 @@ module.exports = (configFile) => {
         console.log(config.resolve.alias[name])
       })
     }
+
+    config.plugins.push(
+      new StatsPlugin(`${distPath}/stats.json`, {
+        chunkModules: true,
+        exclude: pkg.externals.map(name => {
+          return new RegExp(`/node_modules[\\\/]${name}/`)
+        })
+      })
+    )
 
     if (configFile.compress) {
       // todo use uglify before bug (https://github.com/babel/babili/issues/583) fixed

@@ -11,6 +11,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const trimEnd = require('lodash/trimEnd')
 const defaults = require('lodash/defaults')
 const StatsPlugin = require('stats-webpack-plugin')
+const Visualizer = require('webpack-visualizer-plugin')
 
 /**
  * webpack client config
@@ -139,19 +140,22 @@ module.exports = (configFile) => {
       // }))
     }
     if (configFile.production) {
-      // console.log(`[webpack configure] use define plugin, NODE_ENV: production`);
+      // console.log(`[webpack configure] use define plugin, NODE_ENV: production`)
+      config.plugins.push(new Visualizer({
+        filename: `${distPath}/stats.html`
+      }))
       config.plugins.push(new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
       }))
     } else {
-      config.output.publicPath = devPublicPath;
-      // console.log(`[webpack configure] use define plugin, NODE_ENV: development`);
+      config.output.publicPath = devPublicPath
+      // console.log(`[webpack configure] use define plugin, NODE_ENV: development`)
       config.plugins.push(new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('development')
       }))
     }
 
     configFile.packages[pkgIndex].webpack = config
-  });
+  })
 
-};
+}

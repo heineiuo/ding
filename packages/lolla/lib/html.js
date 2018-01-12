@@ -79,7 +79,7 @@ module.exports = (configFile, lollaFile) => {
 
   const globalConstantsToScript = Object.keys(globalConstants).map(item => {
     return `window.${item} = ${JSON.stringify(globalConstants[item])}`
-  }).join(';')
+  }).join('')
   
 
   const htmlOutout =  `<!DOCTYPE html>

@@ -5,11 +5,12 @@ const path = require('path')
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
 const cors = require('cors')
-const renderHTML = require('./html')
-const configFile = require('./config')
 const compression = require('compression')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
+
+const renderHTML = require('./html')
+const configFile = require('./config')
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
@@ -26,7 +27,9 @@ process.nextTick(() => {
     packages.forEach(pkg => {
       if (!pkg.webpack) return null
       const target = pkg.webpack
-      target.entry.app.push(hotMiddlewareScript)
+      Object.keys(target.entry, (key) => {
+        target.entry[key].push(hotMiddlewareScript)
+      })
       target.devtool = 'inline-source-map'
       if (pkg.hot) target.plugins.push(new webpack.HotModuleReplacementPlugin())
       target.plugins.push(new webpack.NoEmitOnErrorsPlugin())

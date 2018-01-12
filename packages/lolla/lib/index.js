@@ -8,9 +8,10 @@ const union = require('lodash/union')
 const shelljs = require('shelljs')
 const { match, when } = require('match-when')
 
-const pkginfo = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json'), 'utf8'))
 const config = require('./config')
 const build = require('./build')
+
+const pkginfo = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'))
 
 const displayHelp = () => console.log(
   `Usage:  lolla COMMAND
@@ -30,9 +31,9 @@ const displayVersion = () => console.log(
 )
 
 const dev = () => {
-  let extraCommand = '';
+  let extraCommand = ''
   if (argv.port) extraCommand += ` --port ${config.port}`
-  shelljs.exec(`node ${path.resolve(__dirname, './server.js')} ${extraCommand}`);
+  shelljs.exec(`node ${path.resolve(__dirname, './server.js')} ${extraCommand}`)
 }
 
 match(argv._[0], {

@@ -4,6 +4,7 @@ const path = require('path')
 const argv = require('yargs').argv
 const jsonFormat = require('json-format')
 const union = require('lodash/union')
+
 const renderHTML = require('./html')
 const config = require('./config')
 

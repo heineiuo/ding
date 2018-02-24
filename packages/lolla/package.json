@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "bin": {
     "lolla": "bin/lolla"
@@ -16,6 +16,10 @@
   "bugs": {
     "url": "https://github.com/heineiuo/lolla/issues"
   },
+  "files": [
+    "bin",
+    "lib"
+  ],
   "homepage": "https://github.com/heineiuo/lolla#readme",
   "dependencies": {
     "babel-core": "^6.24.1",

@@ -2,6 +2,7 @@ const fs = require('fs')
 const express = require('express')
 const webpack = require('webpack')
 const path = require('path')
+const argv = require('yargs').argv
 const union = require('lodash/union')
 const cors = require('cors')
 const compression = require('compression')
@@ -53,9 +54,11 @@ app.route('*').all((req, res, next) => {
   }
 })
 
-app.listen(process.env.PORT, (err) => {
+const port = argv.port || process.env.PORT || 9090
+
+app.listen(port, (err) => {
   if (err) return console.log(err)
-  console.log(`webpack:  Listening at http://localhost:${process.env.PORT}`)
+  console.log(`webpack:  Listening at http://localhost:${port}`)
 })
 
 console.warn('lolla: you should install loaders in this project directory')

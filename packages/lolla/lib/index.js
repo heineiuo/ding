@@ -1,14 +1,12 @@
-const fs = require('mz/fs')
+const fs = require('fs')
 const express = require('express')
 const webpack = require('webpack')
 const path = require('path')
 const argv = require('yargs').argv
-const jsonFormat = require('json-format')
 const union = require('lodash/union')
 const shelljs = require('shelljs')
 const { match, when } = require('match-when')
 
-const config = require('./config')
 const build = require('./build')
 
 const pkginfo = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'))
@@ -32,7 +30,6 @@ const displayVersion = () => console.log(
 
 const dev = () => {
   let extraCommand = ''
-  if (argv.port) extraCommand += ` --port ${config.port}`
   shelljs.exec(`node ${path.resolve(__dirname, './server.js')} ${extraCommand}`)
 }
 

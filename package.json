@@ -18,7 +18,9 @@
   },
   "files": [
     "bin",
-    "lib"
+    "lib",
+    "LICENSE",
+    "*.md"
   ],
   "homepage": "https://github.com/heineiuo/lolla#readme",
   "dependencies": {

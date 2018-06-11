@@ -1,9 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const argv = require('yargs').argv
-const union = require('lodash/union')
 const omit = require('lodash/omit')
-const defaults = require('lodash/defaults')
 const createWebpackConfig = require('./createWebpackConfig')
 
 console.log(`reading ${process.cwd()}/lolla.json`)
@@ -28,13 +26,13 @@ const createConfigsFromLolla = (lollaFile = `${process.cwd()}/lolla.json`) => {
             }
           )
         ))
-      } catch(e){
+      } catch (e) {
         console.log(`valid fail, context': ${pkg.context}`)
         console.log(e)
       }
     })
     return configs
-  } catch(e){
+  } catch (e) {
     console.log('Could not find lolla.json or format error')
     console.log(e)
     return []

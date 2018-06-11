@@ -1,9 +1,6 @@
 const fs = require('fs')
-const express = require('express')
-const webpack = require('webpack')
 const path = require('path')
 const argv = require('yargs').argv
-const union = require('lodash/union')
 const shelljs = require('shelljs')
 const { match, when } = require('match-when-es5')
 
@@ -29,14 +26,13 @@ const displayVersion = () => console.log(
   `lolla version: ${pkginfo.version}`
 )
 
-
 match(argv._[0], {
   [when('dev')]: server.start,
   [when('build')]: build,
   [when('publish')]: () => {
     const { next } = argv
     const targetPackage = argv._[1]
-    if (!!targetPackage) {
+    if (targetPackage) {
       shelljs.cd(`packages/${targetPackage}`)
       shelljs.exec(`rm -f *.js`)
       shelljs.exec(`babel src -d .`)

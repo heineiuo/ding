@@ -2,13 +2,13 @@ const fs = require('fs')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const webpack = require('webpack')
-const mkdirp = require('mkdirp')
+// const mkdirp = require('mkdirp')
 const WebpackSystemRegister = require('webpack-system-register')
-const BabiliPlugin = require('babili-webpack-plugin')
+// const BabiliPlugin = require('babili-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const trimEnd = require('lodash/trimEnd')
+// const trimEnd = require('lodash/trimEnd')
 const defaults = require('lodash/defaults')
-const StatsPlugin = require('stats-webpack-plugin')
+// const StatsPlugin = require('stats-webpack-plugin')
 const Visualizer = require('webpack-visualizer-plugin')
 const argv = require('yargs').argv
 const url = require('url')
@@ -19,7 +19,6 @@ const url = require('url')
  * @param target
  */
 const createWebpackConfig = (configFile) => {
-
   /**
    * @deprecated devUnpkgOrigin and unpkgOrigin will be deprecated
    */
@@ -39,9 +38,9 @@ const createWebpackConfig = (configFile) => {
     entry: './src/index.js',
     nodeModulesDir: './node_modules',
     packageFile: './package.json',
-    outputDir: './umd',
+    outputDir: './umd/',
     publicPathPrefix: 'http://localhost:8080',
-    devPublicPathPrefix: 'https://cdn.jsdeliver.net/npm'
+    devPublicPathPrefix: 'https://cdn.jsdelivr.net/npm'
   })
 
   const {
@@ -52,7 +51,7 @@ const createWebpackConfig = (configFile) => {
     packageFile,
     outputDir,
     devPublicPathPrefix,
-    publicPathPrefix,
+    publicPathPrefix
   } = configFile
 
   const packageJSON = JSON.parse(
@@ -61,8 +60,8 @@ const createWebpackConfig = (configFile) => {
 
   const nodeModulesPath = path.resolve(context, nodeModulesDir) + path.sep
   const outputPath = path.resolve(context, outputDir) + path.sep
-  const publicPath = url.resolve(`${__DEV__ ? devPublicPathPrefix : publicPathPrefix}`, '')
-    + path.posix.resolve(`/${packageJSON.name}@${__DEV__ ? 'latest' : packageJSON.version}`, outputDir).substr(1)
+  const publicPath = url.resolve(`${__DEV__ ? devPublicPathPrefix : publicPathPrefix}`, '') +
+    path.posix.resolve(`/${packageJSON.name}@${__DEV__ ? 'latest' : packageJSON.version}`, outputDir).substr(1) + path.sep
   const entryName = path.basename(packageJSON.name)
 
   const config = {
@@ -83,7 +82,7 @@ const createWebpackConfig = (configFile) => {
       filename: `[name].${__DEV__ ? 'development' : 'production'}.js`,
       library: packageJSON.name,
       libraryTarget: platform === 'web' ? 'umd' : 'commonjs2',
-      umdNamedDefine: platform === 'web' ? true : false
+      umdNamedDefine: platform === 'web'
     },
     externals: platform === 'node' ? [nodeExternals()] : {},
     resolve: {
@@ -91,7 +90,7 @@ const createWebpackConfig = (configFile) => {
       extensions: ['.jsx', '.js', '.json'],
       modules: [
         'node_modules',
-        path.resolve(context, `node_modules`),
+        path.resolve(context, `node_modules`)
       ]
     },
     module: {
@@ -115,7 +114,7 @@ const createWebpackConfig = (configFile) => {
           test: /^((?!hash).)*\.css$/,
           use: [
             'style-loader',
-            'css-loader',
+            'css-loader'
           ]
         },
         {
@@ -127,7 +126,6 @@ const createWebpackConfig = (configFile) => {
     },
     plugins: []
   }
-
 
   if (configFile.useSystemRegister) {
     // console.log('lolla: use system register')
@@ -187,8 +185,6 @@ const createWebpackConfig = (configFile) => {
   }
 
   return config
-
 }
 
 module.exports = createWebpackConfig
-

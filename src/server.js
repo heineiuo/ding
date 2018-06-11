@@ -1,9 +1,6 @@
-const fs = require('fs')
 const express = require('express')
 const webpack = require('webpack')
-const path = require('path')
 const argv = require('yargs').argv
-const union = require('lodash/union')
 const cors = require('cors')
 const compression = require('compression')
 const webpackDevMiddleware = require('webpack-dev-middleware')
@@ -15,8 +12,6 @@ const createConfigsFromLolla = require('./createConfigsFromLolla')
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
 module.exports.start = () => {
-
-
   const packages = createConfigsFromLolla()
 
   const app = express()
@@ -52,7 +47,6 @@ module.exports.start = () => {
   app.route('*').all(express.static(process.cwd()), serveIndex(process.cwd(), { icons: true }))
 
   const port = argv.port || process.env.PORT || 9090
-
 
   app.listen(port, (err) => {
     if (err) return console.log(err)

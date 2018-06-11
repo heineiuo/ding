@@ -1,7 +1,4 @@
-const fs = require('fs')
 const webpack = require('webpack')
-const path = require('path')
-const union = require('lodash/union')
 
 const createConfigsFromLolla = require('./createConfigsFromLolla')
 
@@ -11,7 +8,7 @@ const build = () => {
     try {
       const compiler = webpack(pkg)
       compiler.run((err, stats) => {
-        if (err) return console.error(`webpack: error, ${err.stack || e}`)
+        if (err) return console.error(`webpack: error, ${err.stack || err}`)
       })
     } catch (e) {
       console.log(e)

@@ -27,6 +27,8 @@ const displayVersion = () => console.log(
 )
 
 match(argv._[0], {
+  [when('workspace')]: () => {
+  },
   [when('dev')]: server.start,
   [when('build')]: build,
   [when('publish')]: () => {
@@ -42,5 +44,5 @@ match(argv._[0], {
   },
   [when('version')]: displayVersion,
   [when('help')]: displayHelp,
-  [when()]: server.start
+  [when()]: displayHelp
 })

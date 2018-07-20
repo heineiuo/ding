@@ -1,50 +1,24 @@
-const express = require('express')
-const webpack = require('webpack')
-const argv = require('yargs').argv
-const cors = require('cors')
-const compression = require('compression')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
-const serveIndex = require('serve-index')
+import express from 'express'
+import { argv } from 'yargs'
+import cors from 'cors'
+import compression from 'compression'
+import serveIndex from 'serve-index'
+import createConfigsFromLolla from './createConfigsFromLolla'
+import lolla from './express'
 
-const createConfigsFromLolla = require('./createConfigsFromLolla')
-
-const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
-
-module.exports.start = () => {
-  const packages = createConfigsFromLolla()
-
+const start = () => {
   const app = express()
-
   app.use(cors())
   app.use(compression())
 
-  packages.forEach(target => {
-    Object.keys(target.entry, (key) => {
-      target.entry[key].push(hotMiddlewareScript)
-    })
-    target.devtool = 'inline-source-map'
-    if (target.hot) target.plugins.push(new webpack.HotModuleReplacementPlugin())
-    target.plugins.push(new webpack.NoEmitOnErrorsPlugin())
+  app.use(lolla({
+    packages: createConfigsFromLolla()
+  }))
 
-    target.devServer = {
-      hot: true,
-      inline: true
-    }
-
-    console.log(target.output.publicPath)
-
-    const compiler = webpack(target)
-    app.use(webpackDevMiddleware(compiler, {
-      publicPath: target.output.publicPath,
-      stats: {
-        colors: true
-      }
+  app.route('*').all(
+    express.static(process.cwd()), serveIndex(process.cwd(), {
+      icons: true
     }))
-    if (target.hot) app.use(webpackHotMiddleware(compiler))
-  })
-
-  app.route('*').all(express.static(process.cwd()), serveIndex(process.cwd(), { icons: true }))
 
   const port = argv.port || process.env.PORT || 9090
 
@@ -55,3 +29,5 @@ module.exports.start = () => {
 
   console.warn('lolla: you should install loaders in this project directory')
 }
+
+export default start

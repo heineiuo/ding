@@ -1,12 +1,14 @@
-const fs = require('fs')
-const path = require('path')
-const argv = require('yargs').argv
-const omit = require('lodash/omit')
-const createWebpackConfig = require('./createWebpackConfig')
+import fs from 'fs'
+import path from 'path'
+import omit from 'lodash/omit'
+import createWebpackConfig from './createWebpackConfig'
 
-console.log(`reading ${process.cwd()}/lolla.json`)
+// console.log(`reading ${process.cwd()}/lolla.json`)
 
-const createConfigsFromLolla = (lollaFile = `${process.cwd()}/lolla.json`) => {
+const createConfigsFromLolla = (
+  lollaFile = `${process.cwd()}/lolla.json`,
+  compress = false
+) => {
   try {
     const lollaJSON = JSON.parse(fs.readFileSync(lollaFile, 'utf-8'))
     const configs = []
@@ -16,8 +18,8 @@ const createConfigsFromLolla = (lollaFile = `${process.cwd()}/lolla.json`) => {
         configs.push(createWebpackConfig(
           Object.assign(
             {
-              __DEV__: !(process.env.NODE_ENV === 'production') && !argv.production,
-              compress: argv.compress
+              __DEV__: process.env.NODE_ENV !== 'production',
+              compress: compress
             },
             omit(lollaJSON, ['packages']),
             pkg,
@@ -39,4 +41,4 @@ const createConfigsFromLolla = (lollaFile = `${process.cwd()}/lolla.json`) => {
   }
 }
 
-module.exports = createConfigsFromLolla
+export default createConfigsFromLolla

@@ -1,17 +1,12 @@
-const fs = require('fs')
-const path = require('path')
-const nodeExternals = require('webpack-node-externals')
-const webpack = require('webpack')
-// const mkdirp = require('mkdirp')
-const WebpackSystemRegister = require('webpack-system-register')
-// const BabiliPlugin = require('babili-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-// const trimEnd = require('lodash/trimEnd')
-const defaults = require('lodash/defaults')
-// const StatsPlugin = require('stats-webpack-plugin')
-const Visualizer = require('webpack-visualizer-plugin')
-const argv = require('yargs').argv
-const url = require('url')
+import fs from 'fs'
+import path from 'path'
+import nodeExternals from 'webpack-node-externals'
+import webpack from 'webpack'
+import WebpackSystemRegister from 'webpack-system-register'
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import defaults from 'lodash/defaults'
+import Visualizer from 'webpack-visualizer-plugin'
+import url from 'url'
 
 /**
  * webpack client config
@@ -26,21 +21,16 @@ const createWebpackConfig = (configFile) => {
     console.warn(`'unpkgOrigin' will be deprecated`)
     configFile.publicPathPrefix = configFile.unpkgOrigin
   }
-  if (!configFile.devPublicPathPrefix && configFile.devUnpkgOrigin) {
-    console.warn(`'devUnpkgOrigin' will be deprecated`)
-    configFile.devPublicPathPrefix = configFile.devUnpkgOrigin
-  }
 
   defaults(configFile, {
-    __DEV__: !(process.env.NODE_ENV === 'production') && !argv.production,
+    __DEV__: process.env.NODE_ENV !== 'production',
     context: process.cwd(),
     platform: 'web',
     entry: './src/index.js',
     nodeModulesDir: './node_modules',
     packageFile: './package.json',
     outputDir: './umd/',
-    publicPathPrefix: 'http://localhost:8080',
-    devPublicPathPrefix: 'https://cdn.jsdelivr.net/npm'
+    publicPathPrefix: 'https://cdn.jsdelivr.net/npm'
   })
 
   const {
@@ -50,7 +40,6 @@ const createWebpackConfig = (configFile) => {
     nodeModulesDir,
     packageFile,
     outputDir,
-    devPublicPathPrefix,
     publicPathPrefix
   } = configFile
 
@@ -60,7 +49,7 @@ const createWebpackConfig = (configFile) => {
 
   const nodeModulesPath = path.resolve(context, nodeModulesDir) + path.sep
   const outputPath = path.resolve(context, outputDir) + path.sep
-  const publicPath = url.resolve(`${__DEV__ ? devPublicPathPrefix : publicPathPrefix}`, '') +
+  const publicPath = url.resolve(publicPathPrefix, '') +
     path.posix.resolve(`/${packageJSON.name}@${__DEV__ ? 'latest' : packageJSON.version}`, outputDir).substr(1) + path.sep
   const entryName = path.basename(packageJSON.name)
 
@@ -150,7 +139,7 @@ const createWebpackConfig = (configFile) => {
     })
   }
 
-  if (configFile.compress || argv.compress) {
+  if (configFile.compress) {
     // todo use uglify before bug (https://github.com/babel/babili/issues/583) fixed
     config.plugins.push(new UglifyJSPlugin())
     // config.plugins.push(new BabiliPlugin({
@@ -187,4 +176,4 @@ const createWebpackConfig = (configFile) => {
   return config
 }
 
-module.exports = createWebpackConfig
+export default createWebpackConfig

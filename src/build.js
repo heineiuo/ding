@@ -1,6 +1,5 @@
-const webpack = require('webpack')
-
-const createConfigsFromLolla = require('./createConfigsFromLolla')
+import webpack from 'webpack'
+import createConfigsFromLolla from './createConfigsFromLolla'
 
 const build = () => {
   const packages = createConfigsFromLolla()
@@ -16,4 +15,4 @@ const build = () => {
   })
 }
 
-module.exports = build
+export default build

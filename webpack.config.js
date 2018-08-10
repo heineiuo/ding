@@ -12,7 +12,7 @@ module.exports = (env) => {
         __DEV__,
         compress: !__DEV__,
         publicPathPrefix,
-        context: path.resolve(__dirname, './examples/matcha')
+        context: path.resolve(__dirname, './examples/hello')
       })
     }
   ]

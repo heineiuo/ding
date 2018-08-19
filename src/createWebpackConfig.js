@@ -1,12 +1,12 @@
-import fs from 'fs'
-import path from 'path'
-import nodeExternals from 'webpack-node-externals'
-import webpack from 'webpack'
-import WebpackSystemRegister from 'webpack-system-register'
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
-import defaults from 'lodash/defaults'
-import Visualizer from 'webpack-visualizer-plugin'
-import url from 'url'
+const fs = require('fs')
+const path = require('path')
+const nodeExternals = require('webpack-node-externals')
+const webpack = require('webpack')
+const WebpackSystemRegister = require('webpack-system-register')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const defaults = require('lodash/defaults')
+const Visualizer = require('webpack-visualizer-plugin')
+const url = require('url')
 
 /**
  * webpack client config
@@ -40,6 +40,7 @@ const createWebpackConfig = (configFile) => {
     nodeModulesDir,
     packageFile,
     outputDir,
+    babelOptions,
     publicPathPrefix
   } = configFile
 
@@ -54,6 +55,7 @@ const createWebpackConfig = (configFile) => {
   const entryName = path.basename(packageJSON.name)
 
   const config = {
+    mode: __DEV__ ? 'development' : 'production',
     context,
     devtool: false,
     node: {
@@ -89,10 +91,6 @@ const createWebpackConfig = (configFile) => {
           loader: 'url-loader?limit=1024&name=images/[hash].[ext]'
         },
         {
-          test: /\.(json)$/,
-          loader: 'json-loader'
-        },
-        {
           test: /\.hash\.css$/,
           use: [
             'style-loader',
@@ -109,7 +107,8 @@ const createWebpackConfig = (configFile) => {
         {
           test: /(\.js|\.jsx)$/,
           exclude: /node_modules/,
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: babelOptions
         }
       ]
     },
@@ -126,7 +125,8 @@ const createWebpackConfig = (configFile) => {
   if (configFile.externals) {
     configFile.externals.forEach(externalItem => {
       config.externals[externalItem.commonjs] = Object.assign({
-        root: externalItem.commonjs
+        root: externalItem.commonjs,
+        commonjs2: externalItem.commonjs
       }, externalItem)
     })
     // console.log(config.externals)
@@ -176,4 +176,4 @@ const createWebpackConfig = (configFile) => {
   return config
 }
 
-export default createWebpackConfig
+module.exports = createWebpackConfig

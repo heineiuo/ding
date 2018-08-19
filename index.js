@@ -1,3 +1,4 @@
-'use strict'
+const createServer = require('./dist/createServer')
+const { argv } = require('yargs')
 
-module.exports = module.exports.default = require('./dist')
+createServer(argv)

@@ -1,0 +1,17 @@
+version: '3.2'
+
+services: 
+  web:
+    image: lolla:0.0.9
+    ports: 
+      - "8090:8090"
+    volumes: 
+      - "/web:/root/packages/web"
+      - "/public:/root/public"
+    networks:
+        - webnet
+
+networks:
+  webnet:
+    driver: overlay
+    attachable: true

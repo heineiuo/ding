@@ -78,7 +78,7 @@ module.exports = (argv) => {
   app.use('/node_modules', express.static(path.resolve(process.cwd(), './node_modules')))
   app.use(express.static(path.resolve(process.cwd(), './public')))
 
-  app.get('*', (req, res, next) => {
+  app.get(/^[^.]*$/, (req, res, next) => {
     res.sendFile(path.resolve(process.cwd(), './public/index.html'))
   })
 

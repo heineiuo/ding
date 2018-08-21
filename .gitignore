@@ -2,6 +2,5 @@ node_modules
 packages/**/*.js
 !packages/*/lib/**/*.js
 !packages/*/src/**/*.js
-dist
 umd
 build

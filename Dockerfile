@@ -3,7 +3,7 @@ FROM node:10.9.0-alpine
 RUN mkdir -p /root/packages
 RUN mkdir -p /root/public
 
-COPY dist /root/dist
+COPY lolla /root/lolla
 COPY index.js /root/index.js
 COPY package.json /root/package.json
 COPY webpack.config.js /root/webpack.config.js

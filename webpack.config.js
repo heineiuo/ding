@@ -1,1 +1,1 @@
-module.exports = require('./dist/globConfig')
+module.exports = require('./lolla/globConfig')

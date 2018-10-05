@@ -6,7 +6,7 @@
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn && node index.js --port=8090 --hot",
+    "start": "node yarn.js && node index.js --port=8090 --hot",
     "build": "webpack --env.NODE_ENV=production"
   },
   "workspaces": [

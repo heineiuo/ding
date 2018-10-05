@@ -4,19 +4,20 @@ RUN mkdir -p /root/packages
 RUN mkdir -p /root/public
 
 COPY lolla /root/lolla
+COPY yarn.js /root/yarn.js
 COPY index.js /root/index.js
 COPY package.json /root/package.json
 COPY webpack.config.js /root/webpack.config.js
 
 WORKDIR /root
 
-# RUN echo 'nameserver 9.9.9.9' > /etc/resolv.conf
+# RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf
 
 RUN npm install yarn -g \
   && rm -rf /tmp/* \
   && rm -rf /root/.npm/
 
-RUN yarn config set registry https://r.cnpmjs.org/
+RUN yarn config set registry https://registry.npm.taobao.org
 
 RUN yarn install
 

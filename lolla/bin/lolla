@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-
-confirm.log('CLI not implemented')

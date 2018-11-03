@@ -1,4 +1,4 @@
-FROM node:10.9.0-alpine
+FROM node:10.13.0-alpine
 
 RUN mkdir -p /root/packages
 RUN mkdir -p /root/public

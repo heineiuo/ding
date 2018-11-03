@@ -4,3 +4,4 @@ packages/**/*.js
 !packages/*/src/**/*.js
 umd
 build
+packages

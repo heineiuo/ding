@@ -1,0 +1,17 @@
+{
+  "name": "lolla-docker",
+  "private": true,
+  "version": "0.6.3",
+  "author": "heineiuo <heineiuo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node yarn.js && node dev-server.js --port=8090 --hot",
+    "build": "webpack --env.NODE_ENV=production"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "lolla": "0.6.3"
+  }
+}

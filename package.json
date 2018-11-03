@@ -12,18 +12,9 @@
     "url": "https://github.com/heineiuo/lolla/issues"
   },
   "files": [
-    "index.js",
-    "bin",
+    "lib",
     "LICENSE",
     "*.md"
-  ],
-  "scripts": {
-    "start": "node yarn.js && node dev-server.js --port=8090 --hot",
-    "build": "webpack --env.NODE_ENV=production"
-  },
-  "workspaces": [
-    "lib",
-    "packages/*"
   ],
   "homepage": "https://github.com/heineiuo/lolla#readme",
   "dependencies": {

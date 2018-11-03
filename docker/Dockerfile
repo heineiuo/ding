@@ -3,9 +3,8 @@ FROM node:10.13.0-alpine
 RUN mkdir -p /root/packages
 RUN mkdir -p /root/public
 
-COPY lolla /root/lolla
 COPY yarn.js /root/yarn.js
-COPY index.js /root/index.js
+COPY dev-server.js /root/dev-server.js
 COPY package.json /root/package.json
 COPY webpack.config.js /root/webpack.config.js
 

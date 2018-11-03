@@ -16,7 +16,7 @@ RUN npm install yarn -g \
   && rm -rf /tmp/* \
   && rm -rf /root/.npm/
 
-RUN yarn config set registry https://registry.npm.taobao.org
+# RUN yarn config set registry https://registry.npm.taobao.org
 
 RUN yarn install
 

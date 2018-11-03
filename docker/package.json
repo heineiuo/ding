@@ -12,6 +12,6 @@
     "packages/*"
   ],
   "dependencies": {
-    "lolla": "0.6.3"
+    "lolla": "^0.6.5"
   }
 }

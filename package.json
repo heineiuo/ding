@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "main": "index.js",
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",
@@ -49,7 +49,6 @@
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-node-externals": "^1.7.2",
-    "webpack-system-register": "^1.6.0",
     "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^12.0.1"
   }

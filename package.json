@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "lolla-dev-server": "bin/lolla-dev-server"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heineiuo/lolla.git"
@@ -12,6 +15,7 @@
     "url": "https://github.com/heineiuo/lolla/issues"
   },
   "files": [
+    "bin",
     "lib",
     "LICENSE",
     "*.md",
@@ -29,7 +33,6 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-stage-0": "^7.0.0",
     "@babel/runtime": "^7.1.2",
-    "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.4",
     "babel-preset-minify": "^0.4.3",
     "compression": "^1.7.3",
@@ -51,5 +54,12 @@
     "webpack-node-externals": "^1.7.2",
     "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^12.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }

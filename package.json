@@ -5,7 +5,7 @@
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",
   "bin": {
-    "lolla-dev-server": "bin/lolla-dev-server"
+    "lolla": "bin/lolla"
   },
   "repository": {
     "type": "git",
@@ -33,17 +33,22 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-stage-0": "^7.0.0",
     "@babel/runtime": "^7.1.2",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "babel-preset-minify": "^0.4.3",
+    "commander": "^2.20.0",
     "compression": "^1.7.3",
     "cors": "^2.8.4",
     "css-loader": "^1.0.0",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "glob": "^7.1.2",
+    "ink": "^2.1.1",
     "lodash": "^4.17.10",
     "multi-progress": "^2.0.0",
+    "react": "^16.8.6",
     "react-hot-loader": "^4.3.4",
+    "standard": "^12.0.1",
     "style-loader": "^0.22.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
@@ -54,10 +59,6 @@
     "webpack-node-externals": "^1.7.2",
     "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^12.0.1"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "standard": "^12.0.1"
   },
   "standard": {
     "parser": "babel-eslint"

@@ -1,4 +1,30 @@
 #!/usr/bin/env node
 'use strict'
 
-require('../lib/dev-server.js')
+var program = require('commander')
+var version = require('../package.json').version
+var shell = require('shelljs')
+
+program
+  .version(version)
+  .option('-v, --version', 'Version')
+
+program
+  .command('start')
+  .action(function () {
+    console.log('starting...')
+    if (!shell.which('yarn')) {
+      shell.echo('Sorry, this script requires Yarn')
+      shell.exit(1)
+      return
+    }
+    shell.exec(`yarn nodemon --watch package.json --watch src --watch .env* --exec 'yarn build && node -r dotenv/config build'`)
+  })
+
+program
+  .command('build')
+  .action(function () {
+    console.log('building...')
+  })
+
+program.parse(process.argv)

@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "main": "lib/index.js",
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",

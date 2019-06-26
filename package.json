@@ -1,6 +1,6 @@
 {
   "name": "lolla",
-  "version": "0.6.11",
+  "version": "0.7.0",
   "main": "lib/index.js",
   "author": "heineiuo <heineiuo@gmail.com>",
   "license": "MIT",
@@ -44,6 +44,7 @@
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "glob": "^7.1.2",
+    "husky": "^2.6.0",
     "ink": "^2.1.1",
     "lodash": "^4.17.10",
     "multi-progress": "^2.0.0",
